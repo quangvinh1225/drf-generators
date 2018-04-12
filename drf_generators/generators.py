@@ -1,4 +1,4 @@
-
+from django.conf import settings
 from django.template import Template, Context
 import os.path
 
@@ -25,7 +25,7 @@ class BaseGenerator(object):
 
     def generate_serializers(self, depth):
         content = self.serializer_content(depth)
-        filename = 'serializers.py'
+        filename = settings.BASE_DIR + '/generated/' + 'serializers.py'
         if self.write_file(content, filename):
             return '  - writing %s' % filename
         else:
@@ -33,7 +33,7 @@ class BaseGenerator(object):
 
     def generate_views(self):
         content = self.view_content()
-        filename = 'views.py'
+        filename = settings.BASE_DIR + '/generated/' + 'views.py'
         if self.write_file(content, filename):
             return '  - writing %s' % filename
         else:
@@ -41,7 +41,7 @@ class BaseGenerator(object):
 
     def generate_urls(self):
         content = self.url_content()
-        filename = 'urls.py'
+        filename = settings.BASE_DIR + '/generated/' + 'urls.py'
         if self.write_file(content, filename):
             return '  - writing %s' % filename
         else:

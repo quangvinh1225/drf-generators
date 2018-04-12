@@ -15,11 +15,16 @@ urlpatterns = router.urls
 
 
 MODEL_VIEW = """from rest_framework.viewsets import ModelViewSet
+from django_filters.rest_framework import DjangoFilterBackend
 from {{ app }}.serializers import {{ serializers|join:', ' }}
 from {{ app }}.models import {{ models|join:', ' }}
 {% for model in models %}
 
 class {{ model }}ViewSet(ModelViewSet):
+    __doc__ = ModelViewSet.__doc__
+    
     queryset = {{ model }}.objects.all()
     serializer_class = {{ model }}Serializer
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = '__all__'
 {% endfor %}"""
